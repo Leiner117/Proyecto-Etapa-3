@@ -6,13 +6,14 @@ def file_activities(student):
     try:
         fileActivities = open("Activities.txt","w")
         for i in student.activities:
+        
             description = i.getDescripcion()
             course = i.getCourse()
             date = datetime.strftime(i.getDate(),'%Y/%m/%d')
             start_time = datetime.strftime(i.getStart_time(),'%H:%M')
             end_time = datetime.strftime(i.getEnd_time(),'%H:%M')
             status = i.getStatus()
-            list_emotions = []
+            list_emotions = i.emotions
             fileActivities.write(str(description)+"-"+str(course)+"-"+str(date)+"-"+str(start_time)+"-"+str(end_time)+"-"+str(status)+"-"+str(list_emotions)+"\n")
             fileActivities.close()
     except:
@@ -35,7 +36,9 @@ def read_file():
                 course = line[1]
                 date = line[2]
                 start_time = line[3]
+                start_time = datetime.strptime(start_time, '%H:%M')
                 end_time = line[4]
+                end_time = datetime.strptime(end_time, '%H:%M')
                 status = line[5]
                 list_emotions = line[6].replace("\n",'')
                 ob = activities(description,course,date,start_time,end_time,status)

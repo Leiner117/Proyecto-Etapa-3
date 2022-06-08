@@ -10,6 +10,7 @@ from obclass_time import hours_class
 from obCareers import careers
 from tkinter import messagebox
 import files
+cont = 0
 list_students = []#Almacena todos los estudiantes
 def register (name,email,career,password): 
     '''
