@@ -13,12 +13,21 @@ def file_activities(student):
             start_time = datetime.strftime(i.getStart_time(),'%H:%M')
             end_time = datetime.strftime(i.getEnd_time(),'%H:%M')
             status = i.getStatus()
-            list_emotions = i.emotions
+            list_emotions = create_listemotions(i.emotions)
             fileActivities.write(str(description)+"-"+str(course)+"-"+str(date)+"-"+str(start_time)+"-"+str(end_time)+"-"+str(status)+"-"+str(list_emotions)+"\n")
             fileActivities.close()
     except:
         messagebox.showerror("Archivos","Hay un problema con la escritura del archivo")
-
+def create_listemotions(lista):
+    auxlist = []
+    for i in lista:
+        auxlist2 = []
+        auxlist2.append(i.hour)
+        for a in i.list_emotions:
+             auxlist2.append(a)
+        auxlist.append(auxlist2)
+    return auxlist
+        
 
 def read_file():
     try:

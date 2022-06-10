@@ -53,39 +53,43 @@ def tarea_paralela(estado):
                 response = client.face_detection(image=image)
 
                 faces = response.face_annotations
+                if len(faces) == 1:
 
-                likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE', 'LIKELY', 'VERY_LIKELY')
+                    likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE', 'LIKELY', 'VERY_LIKELY')
 
-                faces_list=[]
+                    faces_list=[]
 
-                for face in faces:
-                    #dicccionario con los angulos asociados a la detección de la cara
-                    face_angles=dict(roll_angle=face.roll_angle,pan_angle=face.pan_angle,tilt_angle=face.tilt_angle)
+                    for face in faces:
+                        #dicccionario con los angulos asociados a la detección de la cara
+                        face_angles=dict(roll_angle=face.roll_angle,pan_angle=face.pan_angle,tilt_angle=face.tilt_angle)
 
-                    #confianza de detección (tipo float)
-                    detection_confidence=face.detection_confidence
+                        #confianza de detección (tipo float)
+                        detection_confidence=face.detection_confidence
 
-                    #Probabilidad de Expresiones
-                    #Emociones: Alegría, pena, ira, sorpresa
-                    face_expressions=dict(  joy_likelihood=likelihood_name[face.joy_likelihood],
-                                            sorrow_likelihood=likelihood_name[face.sorrow_likelihood],
-                                            anger_likelihood=likelihood_name[face.anger_likelihood],
-                                            surprise_likelihood=likelihood_name[face.surprise_likelihood],
-                                            under_exposed_likelihood=likelihood_name[face.under_exposed_likelihood],
-                                            blurred_likelihood=likelihood_name[face.blurred_likelihood],
-                                            headwear_likelihood=likelihood_name[face.headwear_likelihood])
+                        #Probabilidad de Expresiones
+                        #Emociones: Alegría, pena, ira, sorpresa
+                        face_expressions=dict(  joy_likelihood=likelihood_name[face.joy_likelihood],
+                                                sorrow_likelihood=likelihood_name[face.sorrow_likelihood],
+                                                anger_likelihood=likelihood_name[face.anger_likelihood],
+                                                surprise_likelihood=likelihood_name[face.surprise_likelihood],
+                                                under_exposed_likelihood=likelihood_name[face.under_exposed_likelihood],
+                                                blurred_likelihood=likelihood_name[face.blurred_likelihood],
+                                                headwear_likelihood=likelihood_name[face.headwear_likelihood])
 
-                    #polígono de marco de cara
-                    vertices=[]
-                    for vertex in face.bounding_poly.vertices:
-                        vertices.append (dict (x=vertex.x, y=vertex.y))
+                        #polígono de marco de cara
+                        vertices=[]
+                        for vertex in face.bounding_poly.vertices:
+                            vertices.append (dict (x=vertex.x, y=vertex.y))
 
-                    face_dict=dict( face_angles=face_angles,
-                                    detection_confidence=detection_confidence,
-                                    face_expressions=face_expressions,
-                                    vertices=vertices
-                                    )
-                    faces_list.append(face_dict)
+                        face_dict=dict( face_angles=face_angles,
+                                        detection_confidence=detection_confidence,
+                                        face_expressions=face_expressions,
+                                        vertices=vertices
+                                        )
+                        faces_list.append(face_dict)
+                else:
+                    messagebox.showerror("Reconocimiento de Emociones","No se reconoce un rostro en la imagen o se reconocen mas de un rostro")
+                    tarea_paralela()
 
                 x1=faces_list[0]['vertices'][0]['x']
                 y1=faces_list[0]['vertices'][0]['y']
@@ -96,9 +100,10 @@ def tarea_paralela(estado):
                 hour = datetime.now()
                 new_emotions = emotions(hour,face_expressions)
                 ac.emotions.append(new_emotions)
-                sleep(10)
+                sleep(5)
             else:
                 messagebox.showerror("Actividades","No hay ninguna actividad programada para esta hora")
+                exit()
         else:
             exit()
 def capture_photos():
