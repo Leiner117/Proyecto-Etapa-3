@@ -180,3 +180,17 @@ def gen_reports_days(day):
         auxlist.append(auxlist2)
         
     
+def all_change_status(student):
+    for i in student.activities:
+        if i.status == "En curso":
+            date = datetime.now()
+           
+            date = datetime.strftime(date, '%Y/%m/%d')
+            date = datetime.strptime(date, '%Y/%m/%d')
+            if i.date == date:
+                hour = datetime.now()
+                hour = datetime.strftime(hour, '%H:%M')
+                hour = datetime.strptime(hour, '%H:%M')
+                if i.end_time < hour:
+                    i.status = "Realizada"
+                
