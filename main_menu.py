@@ -9,12 +9,17 @@ import functions_students
 import files
 import emotion_recognition
 import Concentration_control
+##########################################
+#Datos quemados en el sistema
 career = careers("Computacion")
 st = students("Leiner Alvarado","leiner@gmail.com",career,12345)
 functions_students.list_students.append(st)
-files.read_file()
-functions_students.all_change_status(st)
+################################################
+
+files.read_file()# Lee el archivo para cargar las actividades ya existentes
+functions_students.all_change_status(st)# Cambia el status de todas las actividades que ya pasaron a realizadas
 cont = 0
+#------------Menu principal------------------------
 def main_window():
     
     on = True
@@ -31,7 +36,7 @@ def main_window():
     tk.Button(main, text="Desactivar reconocimiento", command=emotion_recognition.off, height=2,width=30).place(x=340, y=30)
     #concentracion
     tk.Button(main, text="Control de concentracion", command=Concentration_control.start_control, height=2,width=30).place(x=100, y=100)
-    tk.Button(main, text="Desactivar control", command=print, height=2,width=30).place(x=340, y=100)
+    tk.Button(main, text="Desactivar control", command=Concentration_control.off, height=2,width=30).place(x=340, y=100)
     tk.Button(main, text="Reportes", command=print, height=2,width=20).place(x=340, y=240)
     tk.Button(main, text="Graficos", command=print, height=2,width=20).place(x=168, y=240)
     tk.Button(main, text="Salir ", command=lambda:[files.file_activities(st),emotion_recognition.off(),close(main)], height=2,width=20).place(x=260, y=300)
@@ -40,10 +45,10 @@ def main_window():
     
     
     main.mainloop()
-
+#------------funcion cerrar ventanas------------------------
 def close(win):
     win.destroy()
-
+#------------Menu para cambio de estado de actividades------------------------
 def printactivities():
     winmenuactivities = tk.Toplevel()
     winmenuactivities.title("Cambiar estado de actividades")

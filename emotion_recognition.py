@@ -9,6 +9,9 @@ from obEmotions import emotions
 from datetime import datetime
 import functions_students
 check = False
+'''
+Clase rostro, realiza la funcion de tomar la imagen desde la camara del equipo 
+'''
 class rostro ():
     
     def __init__(self) -> None:
@@ -31,7 +34,11 @@ class rostro ():
                 message='No fue posible capturar la imagen con esta dispositivo!')
         return imagen
 
-
+'''
+Se utiliza el servicio de google para realizar el reconocimiento de emociones
+Se seleciona la actividad activa por la hora del sistema 
+almacena el diccionario de emociones en un objeto y este se vincula a la actividad con la hora exacta en la que se realizo el estudio de emociones
+'''
 
 def tarea_paralela(estado):
     while True:
@@ -100,12 +107,15 @@ def tarea_paralela(estado):
                 hour = datetime.now()
                 new_emotions = emotions(hour,face_expressions)
                 ac.emotions.append(new_emotions)
-                sleep(5)
+                sleep(50)
             else:
                 messagebox.showerror("Actividades","No hay ninguna actividad programada para esta hora")
                 exit()
         else:
             exit()
+'''
+Se utiliza la libreria threading para crear hilos de ejecucion
+'''
 def capture_photos():
     
     estado=[True]
@@ -113,18 +123,24 @@ def capture_photos():
     proceso=threading.Thread(target=tarea_paralela,args=parametros)
     proceso.start()
     
-
+'''
+Seleciona la actividad que cumple con la hora del sistema
+utilizando la funcion datetume.now se consigue la hora y la fecha del sistema 
+para poder compararlos se convierten en string y despues de nuevo en objeto pero con los datos necesarios para la comparacion
+'''
 def select_activities():
-
+    date = datetime.now()
+    date = datetime.strftime(date, '%Y/%m/%d')
+    date = datetime.strptime(date, '%Y/%m/%d')
     hour = datetime.now()
     hour = datetime.strftime(hour, '%H:%M')
     hour = datetime.strptime(hour, '%H:%M')
     for i in functions_students.list_students[0].activities:
-        if i.getStatus() == "En curso":
-            
-            
-            if ((i.getStart_time() <= hour and hour <= i.getEnd_time())):
-                return i
+        if i.date == date:
+            if i.getStatus() == "En curso":
+                
+                if ((i.getStart_time() <= hour and hour <= i.getEnd_time())):
+                    return i
 def off():
     global check
     check = True
