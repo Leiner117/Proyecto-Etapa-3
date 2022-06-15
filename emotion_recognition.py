@@ -96,7 +96,7 @@ def tarea_paralela(estado):
                         faces_list.append(face_dict)
                 else:
                     messagebox.showerror("Reconocimiento de Emociones","No se reconoce un rostro en la imagen o se reconocen mas de un rostro")
-                    tarea_paralela()
+                    tarea_paralela(estado)
 
                 x1=faces_list[0]['vertices'][0]['x']
                 y1=faces_list[0]['vertices'][0]['y']

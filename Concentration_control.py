@@ -1,4 +1,4 @@
-import chunk
+
 import cv2 as cv
 from tkinter import messagebox
 from time import sleep
@@ -42,7 +42,7 @@ se utiliza la libreria pygame para cargar el archivo de audio para la alerta
 '''
 def capture_angles():
     if check == False:
-        cont = 6
+        cont = 5
         time = 0
         while True:
             distracted = True
@@ -70,18 +70,18 @@ def capture_angles():
                     face_angles=dict(roll_angle=face.roll_angle,pan_angle=face.pan_angle,tilt_angle=face.tilt_angle)
                 distracted = select_distracted(face_angles)
                 if distracted == True:
-                    time = 1
+                    cont = cont-1
+                    time = 0
                     if cont == 0:
                         pygame.mixer.music.load("alarma.mp3") 
                         pygame.mixer.music.play(loops=0) 
                         select = messagebox.askyesno("Control de concentracion","Estas distraido,¿Desea detener la alerta?")
                         if select == True:
                             pygame.mixer.music.pause()
-                            cont = 6
-                    cont = cont-1
-                #else:
+                            cont = 5
+                else:
                     time = 20
-                    cont = 6
+                    cont = 5
                 sleep(time)
             else:
                 messagebox.showerror("Control de concentracion","No se reconoce un rostro en la imagen o se reconocen mas de un rostro")

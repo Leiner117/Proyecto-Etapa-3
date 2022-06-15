@@ -16,7 +16,7 @@ def file_activities(student):
             status = i.getStatus()
             list_emotions = create_listemotions(i.emotions)
             fileActivities.write(str(description)+"-"+str(course)+"-"+str(date)+"-"+str(start_time)+"-"+str(end_time)+"-"+str(status)+"-"+str(list_emotions)+"\n")
-            fileActivities.close()
+        fileActivities.close()
     except:
         messagebox.showerror("Archivos","Hay un problema con la escritura del archivo")
 def create_listemotions(lista):
@@ -27,21 +27,15 @@ def create_listemotions(lista):
         for a in i.list_emotions:
             
              auxlist2.append(i.list_emotions[a])
-             '''auxlist2.append(a["sorrow_likelihood"])
-             auxlist2.append(a["anger_likelihood"])
-             auxlist2.append(a["surprise_likelihood"])
-             auxlist2.append(a["under_exposed_likelihood"])
-             auxlist2.append(a["blurred_likelihood"])
-             auxlist2.append(a["headwear_likelihood"])'''
         auxlist.append(auxlist2)
     return auxlist
         
 
-def read_file():
+def read_file(student):
     try:
         fileActivities = open("Activities.txt","r")
     except FileNotFoundError:
-        file_activities()
+        file_activities(student)
         return
     try:
         flag = True
