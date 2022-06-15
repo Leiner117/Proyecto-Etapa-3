@@ -3,6 +3,14 @@ from tkinter import messagebox
 from obActivities import activities
 import functions_students
 from obEmotions import emotions
+
+'''
+Se abre o crea el archivo de texto
+se recorre la lista de actividades
+se escribe cada valor de la actividad en el archivo
+
+'''
+
 def file_activities(student):
     try:
         fileActivities = open("Activities.txt","w")
@@ -19,6 +27,10 @@ def file_activities(student):
         fileActivities.close()
     except:
         messagebox.showerror("Archivos","Hay un problema con la escritura del archivo")
+        
+'''
+Crea una lista con listas con los valores de las emociones 
+'''
 def create_listemotions(lista):
     auxlist = []
     for i in lista:
@@ -30,7 +42,14 @@ def create_listemotions(lista):
         auxlist.append(auxlist2)
     return auxlist
         
+'''
+abre el archivo de texto
+lee el archivo linea por linea 
+utiliza la funcion split para crear una lista de la linea del archivo 
+almacena los valores de la actividad en un objeto 
+almacena el objeto en la lista de actividades en el estudiante correspondiente
 
+'''
 def read_file(student):
     try:
         fileActivities = open("Activities.txt","r")
@@ -63,7 +82,9 @@ def read_file(student):
     except:
         
         messagebox.showerror("Lectura de archivos","Error en la lectura del archivo")
-
+'''
+Crea el diccionario con los valores de las emociones registradas
+'''
 def read_emotions(list):
     auxlist2 = []
     

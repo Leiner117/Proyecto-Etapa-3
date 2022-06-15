@@ -2,10 +2,12 @@
 from matplotlib import pyplot
 emotions_list = ["joy","Sorrow","Anger","Surprise"]
 
+'''
+Cuenta la cantidad de veces que una emocion se repitio en una actividad
+'''
 
 def cont_emotions(ac):
-    #[[1,2,1],[1,1,1]]
-    #result = gen_result(ac)
+    
     aux = []
     
     cont_joy = 0
@@ -29,14 +31,8 @@ def cont_emotions(ac):
     aux.append(cont_anger)
     aux.append(cont_surprise)
     return aux
-def gen_result(ac):
-    aux = []
-    for i in ac.emotions:
-        aux_list2 = []
-        for a in i.list_emotions:
-            aux_list2.append(i.list_emotions[a])
-        aux.append(aux_list2)
-    return aux
+
+#Genera el grafico
 def gen_graphs(ac):
     num_emotions = cont_emotions(ac)
     fig, ax = pyplot.subplots()
